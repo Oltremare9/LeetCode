@@ -1,42 +1,32 @@
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
 class Solution {
     public ListNode mergeKLists(ListNode[] lists) {
-        ListNode res=null;
-        while(!ifEmpty(lists)){
-            ListNode min=lists[getMinNode(lists)];
-            if(res==null)
-                res=min;
-            else{
-                ListNode point=res.next;
-                while(point.next!=null){
-                    point=point.next;
-                }
-                point.next=min;
-                point=point.next;
-                point.next=null;
-            }
-            lists[getMinNode(lists)]=lists[getMinNode(lists)].next;
-        }
-        return res;
-    }
-    private boolean ifEmpty(ListNode[] lists){
+        LinkedList<Integer> arr=new LinkedList<>();
         for(int i=0;i<lists.length;i++){
-            if(lists[i].val!=-1)
-                return false;
-        }
-        return true;
-    }
-    private int getMinNode(ListNode[] lists){
-        int index=-1;
-        int max=Integer.MAX_VALUE;
-        for(int i=0;i<lists.length;i++){
-            if(lists[i].val<max){
-
-                index=i;
-                max=lists[i].val;
+            ListNode node=lists[i];
+            while(node!=null){
+                arr.add(node.val);
+                node=node.next;
             }
-
         }
-        return index;
+
+        Object[] a =arr.toArray();
+        Arrays.sort(a);
+        ListNode res=new ListNode(-1);
+        ListNode temp=null;
+        for(int i=0;i<a.length;i++){
+            ListNode node=new ListNode((int)a[i]);
+            if(res.next==null)
+                res.next=node;
+            else
+                temp.next=node;
+            temp=node;
+        }
+
+        return res.next;
     }
     private class ListNode {
         int val;
