@@ -31,6 +31,10 @@ class Solution {
             return false;
         else if(sx==tx&&sy==ty)
             return true;
-        else return(dfs(sx,sx+sy,tx,ty)||dfs(sx+sy,sy,tx,ty));
+        else if (tx>ty){
+            return (dfs(sx, sy, tx-ty, ty));
+        }else{
+            return (dfs(sx, sy, tx, ty-tx));
+        }
     }
 }
